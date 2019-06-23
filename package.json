@@ -1,8 +1,9 @@
 {
   "name": "logic",
   "version": "1.0.0",
+  "license": "MIT",
   "description": "A Vue.js project",
-  "author": "logic",
+  "author": "biggerkai",
   "private": false,
   "main": "dist/logic.js",
   "repository": {
