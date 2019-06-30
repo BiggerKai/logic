@@ -1,6 +1,6 @@
 {
-  "name": "kmtLogic",
-  "version": "1.0.0",
+  "name": "survey_logic",
+  "version": "1.0.2",
   "license": "MIT",
   "description": "A Vue.js project",
   "author": "com.kmt",
