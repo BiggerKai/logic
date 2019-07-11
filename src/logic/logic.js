@@ -46,10 +46,14 @@ const logic = function (Logic) {
         this.clearLogicValue(logic, toQuItem)
       }
       for (const logic of quLogics) {
-        const {quType, subQuId, logicType, toQuId} = logic
+        const {quType, subQuId, logicType, toQuId, anSubQuId} = logic
         let value = item.value
-        if (/^CHENRADIO|CHENCHECKBOX$/.test(quType) && subQuId) {
-          value = item.descList.find(item => item.id === subQuId).value
+        if (/^CHENRADIO|CHENCHECKBOX|CHENSCORE$/.test(quType)) {
+          if (subQuId) {
+            value = item.descList.find(item => item.id === subQuId).value
+          } else if (anSubQuId) {
+            value = item.descList.find(item => item.id === anSubQuId).value
+          }
         }
         if (util.isNull(value) && logicType === '2') {
           for (const afterQu of questionList.filter(afterQu => afterQu.allOrderById > allOrderById)) {
@@ -107,12 +111,16 @@ const logic = function (Logic) {
       if (quGroupLogics && quGroupLogics.length) {
         let resultStr = ''
         for (const groupLogic of quGroupLogics) {
-          const {anAnd, anQuId} = groupLogic
-          /* if (anQuId !== id) {
-                continue
-              } */
+          const {anAnd, anQuId, subQuId, anSubQuId, anQuType} = groupLogic
           const beforeQuItem = this.getQuItem(anQuId)
           let value = beforeQuItem.value
+          if (/^CHENRADIO|CHENCHECKBOX|CHENSCORE$/.test(anQuType)) {
+            if (subQuId) {
+              value = beforeQuItem.descList.find(item => item.id === subQuId).value
+            } else if (anSubQuId) {
+              value = beforeQuItem.descList.find(item => item.id === anSubQuId).value
+            }
+          }
           if (anAnd === '1') {
             resultStr += ` || `
           } else if (anAnd === '2') {
@@ -150,13 +158,16 @@ const logic = function (Logic) {
       if (quBeforLogics && quBeforLogics.length) {
         let resultStr = ''
         for (const beforlogic of quBeforLogics) {
-          const {anAnd} = beforlogic
-          /* if (anQuId !== id) {
-                continue
-              } */
-          const {anQuId} = beforlogic
+          const {anAnd, anQuId, subQuId, anSubQuId, anQuType} = beforlogic
           const beforeQuItem = this.getQuItem(anQuId)
           let value = beforeQuItem.value
+          if (/^CHENRADIO|CHENCHECKBOX|CHENSCORE$/.test(anQuType)) {
+            if (subQuId) {
+              value = beforeQuItem.descList.find(item => item.id === subQuId).value
+            } else if (anSubQuId) {
+              value = beforeQuItem.descList.find(item => item.id === anSubQuId).value
+            }
+          }
           if (anAnd === '1') {
             resultStr += ` || `
           } else if (anAnd === '2') {
